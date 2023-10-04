@@ -9,12 +9,8 @@
                 <i class="fas fa-shopping-cart"></i> @livewire('cart-count')
             </button>
             <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center" style="background-color: rgba(0,0,0,.5);" x-show="open">
-                    <div class="text-left bg-white h-auto p-4 md:max-w-xl md:p-6 lg:p-8 shadow-xl rounded mx-2 md:mx-0" @click.away="open = false">
-                        <h2 class="text-2xl">Modal title</h2>
-                        @livewire('cart')
-                        <div class="flex justify-center mt-8">
-                            <button class="bg-gray-700 text-white px-4 py-2 rounded no-outline focus:shadow-outline select-none" @click="open = false">Close</button>
-                        </div>
+                    <div class="" @click.away="open = false">
+                        @livewire('shopping-cart')
                     </div>
                 </div>
             </div>
