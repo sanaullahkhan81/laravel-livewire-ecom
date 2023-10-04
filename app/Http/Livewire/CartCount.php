@@ -8,7 +8,7 @@ class CartCount extends Component
 {
     public $count = 0;
 
-    protected $listeners = ['cartUpdated' => 'updateCount'];
+    protected $listeners = ['cartCountUpdated' => 'updateCount'];
 
     public function updateCount($count)
     {

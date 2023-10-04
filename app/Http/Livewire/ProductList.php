@@ -11,9 +11,7 @@ class ProductList extends Component
 
     public $cart = [];
 
-    protected $listeners = [
-        'addItemToCart' => 'addItem',
-    ];
+    protected $listeners = ['addItemToCart' => 'addItem'];
 
     public function addItem($itemId, $itemName, $price): void
     {
@@ -24,7 +22,7 @@ class ProductList extends Component
     public function removeItem($itemId)
     {
         // ... remove item logic
-        $this->emit('cartUpdated', count($this->cart));
+        $this->emit('cartCountUpdated', count($this->cart));
     }
 
     public function render()
