@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -37,6 +36,14 @@ class Cart extends Component
         }
         $this->updateCartCount();
 
+    }
+
+    public function removeItem($index)
+    {
+        unset($this->cart[$index]); // Remove item from cart
+        $this->cart = array_values($this->cart); // Reindex array
+        $this->emit('cartUpdated', array_sum(array_column($this->cart, 'quantity'))); // Update the cart count
+        $this->calculateTotalPrice(); // Update the total price
     }
 
     public function render(): Factory|View|Application

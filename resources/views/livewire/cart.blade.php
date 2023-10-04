@@ -12,13 +12,13 @@
                     <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
                     <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
                 </div>
-                @forelse($cartItems as $item)
-                <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+                @forelse($cartItems  as $index => $item)
+                <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" wire:key="cart-item-{{ $index }}">
                     <div class="flex w-2/5"> <!-- product -->
                         <div class="flex flex-col justify-between ml-4 flex-grow">
                             <span class="font-bold text-sm">{{ $item['name'] }}</span>
                             <span class="text-red-500 text-xs">Soft Drinks</span>
-                            <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                            <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs" wire:click.prevent="removeItem({{ $index }})">Remove</a>
                         </div>
                     </div>
                     <div class="flex justify-center w-1/5">
@@ -37,7 +37,7 @@
                 @empty
                     <p>Your cart is empty.</p>
                 @endforelse
-                <a href="#" class="flex font-semibold text-indigo-600 text-sm mt-10">
+                <a href="#" class="flex font-semibold text-indigo-600 text-sm mt-10" @click="open = false">
 
                     <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
                     Continue Shopping
