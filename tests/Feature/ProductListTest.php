@@ -5,8 +5,6 @@ namespace Tests\Feature;
 use App\Http\Livewire\Cart;
 use App\Http\Livewire\ProductList;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
