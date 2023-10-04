@@ -1,4 +1,4 @@
-<div class="w-full border-gray-200">
+<div class="bg-white p-6 rounded-lg shadow-lg w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
     @foreach($products as $product)
         <div class="bg-white p-6 rounded-lg shadow-lg w-full">
             <div>
@@ -17,6 +17,6 @@
                 </button>
             </div>
         </div>
+
     @endforeach
-    @livewire('cart')
 </div>
