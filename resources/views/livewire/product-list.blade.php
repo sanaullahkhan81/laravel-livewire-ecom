@@ -18,6 +18,6 @@
             </div>
         </div>
     @endforeach
-        <!-- Display Pagination Links -->
-        {{ $products->links() }}
+    <!-- Display Pagination Links -->
+    {{ $products->links() }}
 </div>

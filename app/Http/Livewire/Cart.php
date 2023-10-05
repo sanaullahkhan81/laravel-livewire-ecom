@@ -6,13 +6,19 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class Cart extends Component
 {
     public array $cart = [];
-    public $totalPrice = 0;
+    public float $totalPrice = 0;
     protected $listeners = ['itemAdded' => 'addItemToCart'];
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function mount(): void
     {
         $this->cart = session()->get('cart', []); // Retrieve cart from session or default to empty array
@@ -36,7 +42,7 @@ class Cart extends Component
         $found = false;
         // Check if item is already in the cart
         foreach ($this->cart as $index => $item) {
-            if ($item['id'] == $itemId) {
+            if ($item['id'] === $itemId) {
                 $this->cart[$index]['quantity']++;
                 $found = true;
                 break;
@@ -54,7 +60,6 @@ class Cart extends Component
         }
         $this->updateCartCount();
         $this->storeCartInSession(); // Store cart in session
-
     }
 
     /**
@@ -70,12 +75,18 @@ class Cart extends Component
         $this->storeCartInSession(); // Store cart in session
     }
 
+    /**
+     * @return Factory|View|Application
+     */
     public function render(): Factory|View|Application
     {
         $this->totalPrice = $this->calculateTotalPrice();
         return view('livewire.cart', ['cartItems' => $this->cart]);
     }
 
+    /**
+     * @return float|int
+     */
     public function calculateTotalPrice(): float|int
     {
         $total = 0;
@@ -85,13 +96,19 @@ class Cart extends Component
         return $total;
     }
 
-    public function updateCartCount()
+    /**
+     * @return void
+     */
+    public function updateCartCount(): void
     {
         $totalQuantity = array_sum(array_column($this->cart, 'quantity'));
         $this->emit('cartCountUpdated', $totalQuantity);
     }
 
-    private function storeCartInSession()
+    /**
+     * @return void
+     */
+    private function storeCartInSession(): void
     {
         session(['cart' => $this->cart]); // Store the cart data in the session
     }

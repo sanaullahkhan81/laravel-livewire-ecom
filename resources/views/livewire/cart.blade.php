@@ -8,32 +8,27 @@
                 </div>
                 <div class="flex mt-10 mb-5">
                     <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
-                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
-                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
-                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Quantity</h3>
+                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Price</h3>
+                    <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">Total</h3>
                 </div>
                 @forelse($cartItems  as $index => $item)
-                <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" wire:key="cart-item-{{ $index }}">
-                    <div class="flex w-2/5"> <!-- product -->
-                        <div class="flex flex-col justify-between ml-4 flex-grow">
-                            <span class="font-bold text-sm">{{ $item['name'] }}</span>
-                            <span class="text-red-500 text-xs">Soft Drinks</span>
-                            <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs" wire:click.prevent="removeItem({{ $index }})">Remove</a>
+                    <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5" wire:key="cart-item-{{ $index }}">
+                        <div class="flex w-2/5"> <!-- product -->
+                            <div class="flex flex-col justify-between ml-4 flex-grow">
+                                <span class="font-bold text-sm">{{ $item['name'] }}</span>
+                                <span class="text-red-500 text-xs">Soft Drinks</span>
+                                <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs" wire:click.prevent="removeItem({{ $index }})">Remove</a>
+                            </div>
                         </div>
+                        <div class="flex justify-center w-1/5">
+                            <label>
+                                <input class="mx-2 border text-center w-10" type="text" value="{{$item['quantity']}}" disabled>
+                            </label>
+                        </div>
+                        <span class="text-center w-1/5 font-semibold text-sm">£{{ $item['price'] }}</span>
+                        <span class="text-center w-1/5 font-semibold text-sm">£{{ $item['price'] * $item['quantity'] }}</span>
                     </div>
-                    <div class="flex justify-center w-1/5">
-                        <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-                        </svg>
-
-                        <input class="mx-2 border text-center w-10" type="text" value="{{$item['quantity']}}">
-
-                        <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
-                            <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
-                        </svg>
-                    </div>
-                    <span class="text-center w-1/5 font-semibold text-sm">£{{ $item['price'] }}</span>
-                    <span class="text-center w-1/5 font-semibold text-sm">£{{ $item['price'] * $item['quantity'] }}</span>
-                </div>
                 @empty
                     <p>Your cart is empty.</p>
                 @endforelse
