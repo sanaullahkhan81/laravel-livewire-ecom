@@ -13,19 +13,25 @@ class Cart extends Component
     public $totalPrice = 0;
     protected $listeners = ['itemAdded' => 'addItemToCart'];
 
-    public function mount()
+    public function mount(): void
     {
         $this->cart = session()->get('cart', []); // Retrieve cart from session or default to empty array
         $this->totalPrice = $this->calculateTotalPrice(); // Calculate total price
     }
 
-    public function updatedCart()
+    public function updatedCart(): void
     {
         session()->put('cart', $this->cart); // Store the updated cart in the session
         $this->updateCartCount();
     }
 
-    public function addItemToCart($itemId, $itemName, $itemPrice): void
+    /**
+     * @param int $itemId
+     * @param string $itemName
+     * @param float $itemPrice
+     * @return void
+     */
+    public function addItemToCart(int $itemId, string $itemName, float $itemPrice): void
     {
         $found = false;
         // Check if item is already in the cart
@@ -51,7 +57,11 @@ class Cart extends Component
 
     }
 
-    public function removeItem($index)
+    /**
+     * @param $index
+     * @return void
+     */
+    public function removeItem($index): void
     {
         unset($this->cart[$index]); // Remove item from cart
         $this->cart = array_values($this->cart); // Reindex array
