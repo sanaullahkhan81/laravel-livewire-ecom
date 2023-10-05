@@ -17,6 +17,7 @@
                 </button>
             </div>
         </div>
-
     @endforeach
+        <!-- Display Pagination Links -->
+        {{ $products->links() }}
 </div>

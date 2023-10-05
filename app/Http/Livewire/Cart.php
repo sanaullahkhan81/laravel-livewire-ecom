@@ -13,6 +13,18 @@ class Cart extends Component
     public $totalPrice = 0;
     protected $listeners = ['itemAdded' => 'addItemToCart'];
 
+    public function mount()
+    {
+        $this->cart = session()->get('cart', []); // Retrieve cart from session or default to empty array
+        $this->totalPrice = $this->calculateTotalPrice(); // Calculate total price
+    }
+
+    public function updatedCart()
+    {
+        session()->put('cart', $this->cart); // Store the updated cart in the session
+        $this->updateCartCount();
+    }
+
     public function addItemToCart($itemId, $itemName, $itemPrice): void
     {
         $found = false;
@@ -35,6 +47,7 @@ class Cart extends Component
             ];
         }
         $this->updateCartCount();
+        $this->storeCartInSession(); // Store cart in session
 
     }
 
@@ -44,6 +57,7 @@ class Cart extends Component
         $this->cart = array_values($this->cart); // Reindex array
         $this->emit('cartCountUpdated', array_sum(array_column($this->cart, 'quantity'))); // Update the cart count
         $this->calculateTotalPrice(); // Update the total price
+        $this->storeCartInSession(); // Store cart in session
     }
 
     public function render(): Factory|View|Application
@@ -65,6 +79,11 @@ class Cart extends Component
     {
         $totalQuantity = array_sum(array_column($this->cart, 'quantity'));
         $this->emit('cartCountUpdated', $totalQuantity);
+    }
+
+    private function storeCartInSession()
+    {
+        session(['cart' => $this->cart]); // Store the cart data in the session
     }
 
 }

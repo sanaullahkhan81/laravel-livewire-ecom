@@ -4,10 +4,11 @@ namespace App\Http\Livewire;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductList extends Component
 {
-    public $products;
+    use WithPagination; // Use the pagination trait
 
     public $cart = [];
 
@@ -27,8 +28,9 @@ class ProductList extends Component
 
     public function render()
     {
-        $this->products = Product::all();
-        return view('livewire.product-list');
+        // Use paginate instead of all for the products.
+        $products = Product::paginate(10);
+        return view('livewire.product-list', ['products' => $products]);
     }
 
 
