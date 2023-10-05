@@ -113,4 +113,34 @@ class Cart extends Component
         session(['cart' => $this->cart]); // Store the cart data in the session
     }
 
+    /**
+     * @param int $itemId
+     * @return void
+     */
+    public function decrementQuantity(int $itemId): void
+    {
+        foreach ($this->cart as $index => $item) {
+            if ($item['id'] === $itemId && $item['quantity'] > 1) {
+                $this->cart[$index]['quantity']--;
+            }
+        }
+        $this->updateCartCount();
+        $this->storeCartInSession(); // Store cart in session
+    }
+
+    /**
+     * @param int $itemId
+     * @return void
+     */
+    public function incrementQuantity(int $itemId): void
+    {
+        foreach ($this->cart as $index => $item) {
+            if ($item['id'] === $itemId) {
+                $this->cart[$index]['quantity']++;
+            }
+        }
+        $this->updateCartCount();
+        $this->storeCartInSession(); // Store cart in session
+    }
+
 }
