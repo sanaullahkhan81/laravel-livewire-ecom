@@ -28,18 +28,21 @@ class StoreCartItems
     {
         $user = $event->user;
 
-        // store each item from session cart to database
-        foreach (session('cart', []) as $item) {
-            $user->cartItems()->updateOrCreate(
-                [
-                    'product_id' => $item['id'],  // Use the item's product_id to determine existence
-                ],
-                [
+        $sessionCart = session('cart', []);
+
+        // Delete all existing cart items of this user
+        $user->cartItems()->delete();
+
+        // If the cart is not empty, add current cart items to the database
+        if (!empty($sessionCart)) {
+            foreach ($sessionCart as $item) {
+                $user->cartItems()->create([
+                    'product_id' => $item['id'],
                     'item_name' => $item['name'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
-                ]
-            );
+                ]);
+            }
         }
 
         // Clear the session cart
