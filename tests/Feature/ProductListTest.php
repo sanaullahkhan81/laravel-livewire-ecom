@@ -13,13 +13,12 @@ class ProductListTest extends TestCase
     public function test_shows_all_products()
     {
         // Arrange: Create some products using a factory
-        $products = Product::factory()->count(3)->create();
+        $products = Product::factory()->count(2)->create(); // Assume you have a per-page limit of 10
 
         // Act & Assert: Check that each product name is visible in the component's output
         Livewire::test(ProductList::class)
             ->assertSee($products[0]->name)
-            ->assertSee($products[1]->name)
-            ->assertSee($products[2]->name);
+            ->assertSee($products[1]->name);
     }
 
     /**

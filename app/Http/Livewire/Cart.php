@@ -25,6 +25,9 @@ class Cart extends Component
         $this->totalPrice = $this->calculateTotalPrice(); // Calculate total price
     }
 
+    /**
+     * @return void
+     */
     public function updatedCart(): void
     {
         session()->put('cart', $this->cart); // Store the updated cart in the session
